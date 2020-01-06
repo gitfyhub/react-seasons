@@ -3,29 +3,10 @@ import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
 import Spinner from "./Spinner";
 
-// // Functional Component
-// const App = () => {
-//   window.navigator.geolocation.getCurrentPosition(
-//     position => console.log(position),
-//     err => console.log(err)
-//   );
-//   return <div>Latitude: </div>;
-// };
-
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   // This is the only time we do direct assignment to this.state
-  //   // this.state = { lat: null, lon: null };
-  // }
-
   state = { lat: null, lon: null };
 
   componentDidMount() {
-    console.log("component did mount - rendered to the screen");
-
-    // we did not do this at it can not be set this way!!!
-    // this.state.lat = position.coords.latitude;
     window.navigator.geolocation.getCurrentPosition(
       position =>
         this.setState({
@@ -37,15 +18,7 @@ class App extends React.Component {
     );
   }
 
-  componentWillUnmount() {
-    console.log("component will unmount");
-  }
-
-  componentDidUpdate() {
-    console.log("my component just updated - it re-rendered");
-  }
-
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage}</div>;
     }
@@ -55,6 +28,10 @@ class App extends React.Component {
     }
 
     return <Spinner message="Please accept location request." />;
+  }
+
+  render() {
+    return <div className="border red">{this.renderContent()}</div>;
   }
 }
 
